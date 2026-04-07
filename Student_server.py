@@ -19,6 +19,14 @@ async def get_videogames():
     response = supabase.table("videogames").select("*").execute()
     return response.data
 
+@app.patch("/videogames/{game_id}")
+async def patch_videogame(game_id: int, videogame: dict):
+    response = supabase.table("videogames")\
+        .update(videogame)\
+        .eq("id", game_id)\
+        .execute()
+    return response.data
+
 @app.post("/videogames")
 async def create_videogame(videogame: dict):
     response = supabase.table("videogames").insert(videogame).execute()
